@@ -1,65 +1,18 @@
-<!DOCTYPE html>
+---
+layout: default
+---
 
-<html>
+<div class="posts">
+  {% for post in site.posts %}
+    <article class="post">
 
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <!--<link rel="icon" href="assets/img/favicon.ico">-->
+      <h1><a href="{{ site.baseurl }}{{ post.url }}">{{ post.title }}</a></h1>
 
-    <title>Mona</title>
+      <div class="entry">
+        {{ post.excerpt }}
+      </div>
 
-    <!-- bootstrap core css -->
-    <link href="assets/css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- font awesome icons -->
-    <link href="assets/css/font-awesome/css/font-awesome.min.css" rel="stylesheet">
-    <!-- custom css -->
-    <link href="assets/css/custom-white.css" rel="stylesheet">
-    <!-- google fonts -->
-    <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
-</head>
-
-<body>
-
-    <!-- HERO -->
-    <!--<section id="hero" data-type="background" data-speed="5">-->
-    <section id="hero">
-        <article>
-            <div class="container clearfix">
-                <div class="row">
-                    <div class="col-sm-6 col-sm-offset-3 hero-text">
-                        <h1>Nurvirta Monarizqa</h1>
-                        <p class="lead">Coming Soon</p>
-                    </div>
-                    <!-- col -->
-                </div>
-                <!-- row -->
-            </div>
-            <!-- container -->
-        </article>
-    </section>
-    <!-- hero -->
-
-
-
-    <!-- Bootstrap core javascript -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js "></script>
-    <script src="assets/js/jquery-3.1.1.min.js "></script>
-    <script src="assets/js/bootstrap.min.js "></script>
-    <script src="assets/js/main.js "></script>
-    <!-- TYPEKIT -->
-    <script src="https://use.typekit.net/tkx8oee.js "></script>
-    <script>
-        try {
-            Typekit.load({
-                async: true
-            });
-        } catch (e) {}
-    </script>
-</body>
-
-</html>
+      <a href="{{ site.baseurl }}{{ post.url }}" class="read-more">Read More</a>
+    </article>
+  {% endfor %}
+</div>

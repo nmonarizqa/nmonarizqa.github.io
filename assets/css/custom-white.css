@@ -239,6 +239,10 @@ blockquote:before {
     vertical-align: middle;
 }
 
+#hero h1 {
+    background:
+}
+
 #hero .hero-text {
     margin-top: 10px;
 }
