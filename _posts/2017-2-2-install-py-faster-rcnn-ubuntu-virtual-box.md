@@ -1,7 +1,4 @@
-
-
-
-# Install py-faster-rcnn in Virtual Box (Ubuntu)
+# Install Py Faster Rcnn Ubuntu Virtual Box
 <small> @nmonarizqa | 1/18/2017 </small>
 
 This is how I install `py-faster-rcnn`, up to running `demo.py` to make sure the installation is succesful. Since we can't virtualize graphic device, the library will be **running on CPU**, so there are bunch of modifications here. Replace any `<user>` below with your real username.
