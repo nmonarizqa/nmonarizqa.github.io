@@ -51,13 +51,13 @@
 
 .btn-info {
 	@extend .btn;
-	background-color: $info-color;
+	background-color: $magenta-color;
 	color: $white;
 	&:visited {
 		color: $white;
 	}
 	&:hover {
-		background-color: lighten($info-color, 10);
+		background-color: lighten($magenta-color, 10);
 	}
 }
 

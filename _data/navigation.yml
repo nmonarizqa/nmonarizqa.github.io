@@ -1,6 +1,14 @@
 # Site navigation links
 
-- title:
-  url:
-  excerpt:
-  image:
+- title: Portofolio
+  url: /portofolio/
+  excerpt: "Things I’ve designed, illustrated, developed, coded, and whatever."
+  image: portofolio.PNG
+
+- title: Articles
+  url: /articles/
+  excerpt: "Some writings about random technical things."
+  image: articles.png
+
+- title: About
+  url: /about/
