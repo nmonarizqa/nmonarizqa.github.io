@@ -8,7 +8,7 @@ image:
     feature: head2.jpg
 ---
 
-Hello, my name is Nurvirta Monarizqa, but you can call me Mona. 
+Hello, my name is Nurvirta Monarizqa, but simply call me Mona. 
 
 I am an Urban Data Scientist based in New York, currently pursuing Master Degree at Center for Urban Science + Progress, New York University.
 
