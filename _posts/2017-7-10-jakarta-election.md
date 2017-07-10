@@ -16,7 +16,11 @@ categories: portofolio
 
 Although “Unity in Diversity” (Bhinneka Tunggal Ika) is the official motto of Indonesia, apparently, this did not hold well in the case of Jakarta’s Regional Election 2017. Let me introduce Basuki Tjahaja Purnama, known as Ahok, an incumbent seeking re-election. Ahok is Chinese in ethnicity, Christian, disciplined, and very blunt. He is a minority, considering the vast amount of Muslim, Malay / Javanese, and more subtle people of Indonesia. He began as a Vice Governor of Jakarta in 2012 and then became as Governor after Jokowi, the then-Governor was elected as a President in 2014. He has been changing Jakarta in a very good way and bringing lots of improvement. His public acceptance has always been positive.
 
-However, some extremist Islamic organizations began to shake public opinion by citing a Quran verse, Al-Maidah:51 – <blockquote>“O you who have believed, do not take the Jews and the Christians as allies. They are [in fact] allies of one another. And whoever is an ally to them among you - then indeed, he is [one] of them. Indeed, Allah guides not the wrongdoing people”</blockquote> – that indirectly suggests that Muslim residents should not vote for Ahok because of his religion. Ahok then suggested people should not to be deceived by the verse. This statement blew up and was considered a blasphemy.
+However, some extremist Islamic organizations began to shake public opinion by citing a Quran verse, Al-Maidah:51 –
+
+>“O you who have believed, do not take the Jews and the Christians as allies. They are [in fact] allies of one another. And whoever is an ally to them among you - then indeed, he is [one] of them. Indeed, Allah guides not the wrongdoing people”
+
+– that indirectly suggests that Muslim residents should not vote for Ahok because of his religion. Ahok then suggested people should not to be deceived by the verse. This statement blew up and was considered a blasphemy.
 
 After that incident, news about the election was overshadowed by the blasphemy issue. Fake news were growing as well as intolerance among people. Religious issues seemed to matter more than campaign promises. This paper will discuss how people’s opinions changed over time, before and after the blasphemy controversy.
 
