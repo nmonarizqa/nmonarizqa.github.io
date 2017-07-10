@@ -8,9 +8,10 @@ image:
 categories: portofolio
 ---
 
-**Authors**: Nurvirta Monarizqa / Tashay Green / Zhaohong Niu / Sharon Jiaqian Liu
+*A project to predict whether a tobacco retailer in New York City will sell to youth and identify the variables that influence this activity.*
 
-_Final report for Machine Learning for Cities Course, CUSP New York University, Spring 2017_
+<p class="notice-inverse">
+**Authors**: Nurvirta Monarizqa / Tashay Green / Zhaohong Niu / Sharon Jiaqian Liu. This is a final project for Machine Learning for Cities Course, CUSP New York University, Spring 2017.</p>
 
 ## Introduction
 
