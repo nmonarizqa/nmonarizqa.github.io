@@ -8,7 +8,7 @@ image:
 categories: portofolio
 ---
 
-*Authors*: Nurvirta Monarizqa / Tashay Green / Zhaohong Niu / Sharon Jiaqian Liu
+**Authors**: Nurvirta Monarizqa / Tashay Green / Zhaohong Niu / Sharon Jiaqian Liu
 
 _Final report for Machine Learning for Cities Course, CUSP New York University, Spring 2017_
 
@@ -30,11 +30,11 @@ Determining whether and why a retailer may sell tobacco to youth is a challengin
 
 ## Related Work
 
-*Analysis of factors related to illegal tobacco sales to young people in Ontario (O`Grady, Asbridge, Abernathy, 1999)*
+**Analysis of factors related to illegal tobacco sales to young people in Ontario (O`Grady, Asbridge, Abernathy, 1999)**
 
 Research conducted in Ontario, Canada concluded that older adolescents and females were more like to successfully purchase tobacco products, especially in tobacco-producing regions. Results of the study was gathered through random compliance checks of tobacco retailers where youth were intentionally sent to selected retailers to attempt a purchase of cigarettes.
 
-*The density of tobacco retailers in home and school environments and relationship  with adolescent smoking behaviours in Scotland (Shortt, Tisch, Pearce, Richardson, Mitchell, 2016)*
+**The density of tobacco retailers in home and school environments and relationship  with adolescent smoking behaviours in Scotland (Shortt, Tisch, Pearce, Richardson, Mitchell, 2016)**
 
 This research project primarily sought to examine how the density of tobacco retailers impacted smoking rates among adolescents in Scotland. The study concluded that higher densities of tobacco retailers in residential neighborhoods, correlated with higher smoking rates in adolescents. A final recommendation was made to reduce density of neighborhood tobacco retailers to curb adolescent smoking.
 
@@ -42,18 +42,21 @@ We will apply prior thinking and research methodologies to the youth smoking end
 
 ## Data
 
+<img src="{{ site.url }}/images/tobacco-nyc.JPG">
+
 The dataset used in this project is a merged dataset from various resources (see Table 1). First, we got a dataset from New York State Open Data about the locations of all tobacco retailers in New York State. We spatially joined the data to a New York City shapefile to get only the tobacco retailers in New York City. Then, we filtered the 311 data to contain only reports pertaining to cigarette sales to youth. We merged both datasets based on location (nearest neighbor under 200 feet) to get the number of reports for each tobacco retailer.
 
 Other factors that we are interested in are the proximity of the retailer to the subway station, distance to nearest high school, “density” of tobacco retailers and schools in a census tract. For the proximity, we calculated the distances of each tobacco retailer to the nearest subway and high school. For number of tobacco retailers, we spatially joined the census tract shapefile with tobacco retailer data. Lastly, for school density, we calculated the number of schools in a 1 mile radius of a given tobacco retailer.
 
 To take into account socioeconomic and demographic factors, we gathered the total population and median household income of a census tract. We also retrieved academic performance data about high schools nearest tobacco retailers to paint a picture of the youth that may be illegally purchasing tobacco products. Academic data included the percentage of female students for a school, percentage of students for each race, enrollment, percent of poverty, and student achievement rating.
 
-Finally, the master dataset contained 10526 tobacco retailers with 22 valid columns, including `id`, `BoroCT2010`, `n_report`,`DBN`, `school_distance`, `n_school`, `subway_distance`, `n_tobacco`, `Enrollment`, `Student Achievement Rating`, `Percent White`, `Percent Black`, `Percent Hispanic`, `Percent Asian`,`% Female`, `% Poverty`, `MHI`, `Total Population`, `type`, `latitude`, `longitude` and `class`. `
+Finally, the master dataset contained 10526 tobacco retailers with 22 valid columns, including `id`, `BoroCT2010`, `n_report`,`DBN`, `school_distance`, `n_school`, `subway_distance`, `n_tobacco`, `Enrollment`, `Student Achievement Rating`, `Percent White`, `Percent Black`, `Percent Hispanic`, `Percent Asian`,`% Female`, `% Poverty`, `MHI`, `Total Population`, `type`, `latitude`, `longitude` and `class`.
 
-Based on the feature ``n_report``, which indicates the frequency of tobacco sales to youth, the whole dataset is split into classes. We did both binary class separations and multiclass separations of the data. For binary class separation, if the store had sold cigarettes to youth in the past, it was assigned to class 1, otherwise, 0. For multiclass separation, if the store had 0 reports, it was assigned to class 1, 1 to 2 reports it belong to class 2,  3 to 10 reports  it belong to class 3 and those contain more than 10 reports are class 4. Class information is stored in the feature ``class`` (see Table 2).
+Based on the feature `n_report`, which indicates the frequency of tobacco sales to youth, the whole dataset is split into classes. We did both binary class separations and multiclass separations of the data. For binary class separation, if the store had sold cigarettes to youth in the past, it was assigned to class 1, otherwise, 0. For multiclass separation, if the store had 0 reports, it was assigned to class 1, 1 to 2 reports it belong to class 2,  3 to 10 reports  it belong to class 3 and those contain more than 10 reports are class 4. Class information is stored in the feature `class` (see Table 2).
 
 <img src="{{ site.url }}/images/table-2.JPG">
-<cite>*Table 2.*  `class` feature has been categorized in a binary and multiclass fashion based on the number of reports per tobacco retailer. Each machine learning method was attempted using binary and multiclass, typically only the binary classification produced fruitful results.</cite>
+
+<cite>**Table 2.**  `class` feature has been categorized in a binary and multiclass fashion based on the number of reports per tobacco retailer. Each machine learning method was attempted using binary and multiclass, typically only the binary classification produced fruitful results.</cite>
 
 Data Sources:
 - [Tobacco Retailer NY](https://health.data.ny.gov/Health/Active-Retail-Tobacco-Vendors/9ma3-vsuk/data)
@@ -73,7 +76,8 @@ In the first iteration, we trained a Decision Tree using attributes `school_dist
 A second decision tree was built using the important features `n_tobacco`, `MHI`,  `subway_distance`, `school_distance`, and `Total Population`. With the refined features, the model was able to predict targets with 84% accuracy, 71% precision, and 50% recall at max depth = 5 (see Figure 1).
 
 <img src="{{ site.url }}/images/dt-tobacco.png">
-<cite>*Figure 1.* Decision tree based on the five important features of the data set, with max depth 5. The model predicted with 84% accuracy, whether a tobacco retailer would sell to youth, 71% precision and 50% recall. Illegal tobacco sales are of class 0 (no sale) and class 1 (has sold).</cite>
+
+<cite>**Figure 1.** Decision tree based on the five important features of the data set, with max depth 5. The model predicted with 84% accuracy, whether a tobacco retailer would sell to youth, 71% precision and 50% recall. Illegal tobacco sales are of class 0 (no sale) and class 1 (has sold).</cite>
 
 Since this model did not take into account spatial attributes, we decided to use other methodologies to identify spatial autocorrelation.
 
@@ -84,8 +88,8 @@ The random forest model is trained on the features `school_distance`, `n_school`
 After data preprocessing, the dataset is split into a training set and a testing set with 30/70 proportion. The random forest model successfully predicts 84.67% of the data. The precision is 21.16% and the recall is 25%. The low precision and recall are due to the use of multiclass classification as well as the existence of outliers in class 3 and class 4. The items of these two classes are highly random. The feature importance analysis states that median household income, total population and geographical position are top three factors which significantly impact the probability of tobacco sales to youth (see Table 3).        
 
 <img src="{{ site.url }}/images/table-3.JPG">
-<cite>*Table 3.* Random forest top 5 important features, `MHI`, `Total Population`, `longitude`, `n_tobacco`, and `latitude`.</cite>                    
 
+<cite>**Table 3.** Random forest top 5 important features, `MHI`, `Total Population`, `longitude`, `n_tobacco`, and `latitude`.</cite>                    
 
 ### Bayesian Network
 
@@ -94,7 +98,8 @@ We applied a Bayesian Network to classify the tobacco retailers, as well as look
 From the best edges, we know that some of these features have no relationship to our target class, so we remove them. The remaining features are `n_school`, `n_tobacco`, `MHI`, `Total Population`, `latitude` and `longitude`. Refer to Figure 3 for the network built by training the data.
 
 <img src="{{ site.url }}/images/bayes-net.png">
-<cite>*Figure 3.* A visualization of the Bayesian network created by the training data. </cite>
+
+<cite>**Figure 3.** A visualization of the Bayesian network created by the training data. </cite>
 
 We tested this model ten times for both binary and multiclass. The model yields an average accuracy, precision, and recall of 84.67%, 42.4%, and 50% respectively for binary. The accuracy is good, however, the percentage of precision and recall are not as good, indicating that this model is good at predicting tobacco retailers that have never sold tobacco to youth, but not otherwise. For the multiclass, the model yields 85% of accuracy because all of the data records are predicted to be class 1. The model, when applied to multiclass, failed to detect classes other than class 1 (have never sold).
 
@@ -103,7 +108,8 @@ For the multiclass categorizations, we tried a different approach to detect the 
 Overall the model failed to detect multiclass record categorizations (and one of the multiclass as anomaly) most likely because elements in class 3 and 4 have rather random attributes and do not have any plausible pattern based on the attributes that we included in the model. Figure 4 shows that there is no specific spatial pattern for classes 3 and 4, so it is more difficult to detect them.
 
 <img src="{{ site.url }}/images/dispersion.JPG">
-<cite>*Figure 4.*  Dispersion of tobacco retailers for multiclass categorizations of the target. Retailers that have 1-2 reports or 3-10 reports are more closely located than those with >10 reports. </cite>
+
+<cite>**Figure 4.**  Dispersion of tobacco retailers for multiclass categorizations of the target. Retailers that have 1-2 reports or 3-10 reports are more closely located than those with >10 reports. </cite>
 
 ### DBSCAN
 
@@ -118,17 +124,12 @@ To cross-validate the result, we conducted spatial autocorrelation analysis (Mor
 The gaussian process was used to predict the number of reports as a function of location. The attributes are the longitude and latitude, with the log of number of reports subtracted by the mean of all the logs, as the target. We used Gaussian Process Regressor with kernel equal to 0.185**2 * RBF(length_scale=0.01) + WhiteKernel(noise_level=0.49). We got the Logarithm of the Marginal Likelihood of -629.318. This number is greater than -1400, thus, the model is interpreted as being a good fit for the data. Much like the DBSCAN, the model is able to identify the cluster of retailers in upper Manhattan that have frequent occurrences of selling tobacco to youth.
 
 <img src="{{ site.url }}/images/spatial.JPG">
+
 <cite>*Figure 4.*  Gaussian process, Spatial Autocorrelation, and DBSCAN show East Harlem, Manhattan as the most prevalent hotspot. </cite>
 
 ## Conclusion
 
 Of the predictive models used in this research, the model that best fit the data and yielded the greatest accuracy and precision values was the Decision Tree. The important features are: median household income, total population, number of tobacco retailers, distance to subway and distance to nearest high schools. According to the top five important features from our trained model (see Table 4),  the number of tobacco retailers within a census tract level has a significant impact on whether a retailer would sell cigarettes to youth. The spatial pattern we detected also indicates that East Harlem at Upper Manhattan is where a cluster of tobacco retailers are located that have reportedly sold to youth. Besides location attributes, demographics and socio-economic factors, especially income level of the community also plays an important role, as retailers located within areas of lower median household income are more prone to sell their tobacco products to youth.  
-
-The results of this study identify important socio-economic and spatial-related factors of tobacco retailers more inclined to sell cigarettes to youth.
-
-## Future Work
-
-The 311 tobacco data is generated by residents who reported incidences of illegal sales. However, the propensity to call 311 might be different from one part of the city to another. In this project, we did not include that propensity as it is hard to obtain the exact numbers and the research are still ongoing. Also, it may be interesting to look at timeseries data and apply a model that counts recency and frequency as the attributes, as well as other external attributes such as tobacco survey to youth, tobacco advertisements, etc. to create a model that better predict multiclass targets for tobacco retailers that are likely to sell tobacco to youth.
 
 | Variables                       | Importance    |
 | ------------------------------- |---------------|
@@ -139,6 +140,13 @@ The 311 tobacco data is generated by residents who reported incidences of illega
 | Total Population                | 0.0625302     |
 
 <cite>*Table 4.* Feature importance for the Decision Tree</cite>
+
+The results of this study identify important socio-economic and spatial-related factors of tobacco retailers more inclined to sell cigarettes to youth.
+
+## Future Work
+
+The 311 tobacco data is generated by residents who reported incidences of illegal sales. However, the propensity to call 311 might be different from one part of the city to another. In this project, we did not include that propensity as it is hard to obtain the exact numbers and the research are still ongoing. Also, it may be interesting to look at timeseries data and apply a model that counts recency and frequency as the attributes, as well as other external attributes such as tobacco survey to youth, tobacco advertisements, etc. to create a model that better predict multiclass targets for tobacco retailers that are likely to sell tobacco to youth.
+
 
 ## References
 
