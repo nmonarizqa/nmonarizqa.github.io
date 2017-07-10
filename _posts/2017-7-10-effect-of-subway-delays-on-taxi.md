@@ -4,7 +4,7 @@ title: "The Effect of Subway Delays on Taxi Ridership in New York City"
 share: true
 modified: 2017-07-10T13:32:57-04:00
 image:
-    teaser: teaser-taxi.png
+    teaser: teaser-taxi1.png
 categories: portofolio
 ---
 
