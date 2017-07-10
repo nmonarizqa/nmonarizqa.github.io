@@ -8,7 +8,7 @@ image:
 categories: portofolio
 ---
 
-*A project to predict whether a tobacco retailer in New York City will sell to youth and identify the variables that influence this activity.*
+*A project to predict whether a tobacco retailer in New York City will sell to youth and identify the variables that influence this activity using random forest, decision tree, bayesian networks, gaussian process, DBSCAN, and spatial autocorrelation.*
 
 <p class="notice-inverse">
 **Authors**: Nurvirta Monarizqa / Tashay Green / Zhaohong Niu / Sharon Jiaqian Liu. This is a final project for Machine Learning for Cities Course, CUSP New York University, Spring 2017.</p>
