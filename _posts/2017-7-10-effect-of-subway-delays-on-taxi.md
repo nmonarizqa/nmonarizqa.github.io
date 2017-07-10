@@ -26,38 +26,40 @@ This was tested on a station-by-station basis. We further speculated that this e
 
 Data for taxi ridership and subway delays was collected for June 2016 between the hour of 7am and 8pm.
 
-### Taxi Ridership
+#### Taxi Ridership
 We used publicly available data on taxi rides published by the Taxi and Limousine Commission for yellow and green taxi cabs. This dataset contains an entry for each ride during the month and has a total size of 1.75GB for yellow and a .24GB for green. We ultimately needed to match taxi ridership with subway delays by station, date and hour. For June 2016, there were thus 198,660 keys to match on given 30 days x 14 hours x 473 stations. Taxi data was pulled from [here](www.nyc.gov/html/tlc/html/about/trip_record_data.shtml).
 
-### Subway Data
+#### Subway Data
 We used subway time data collected by [Nathan Johnson](http://data.mytransit.nyc/subway_time/). The data is in GTFS format, 6.3 GB in size and contains 125,092 files for June 2016.
 
-### Additional datasets
+#### Additional datasets
 Additionally, we used the [subway station shapefile](https://data.cityofnewyork.us/Transportation/Subway-Stations/arq3-7z49/data) in order to filter taxi rides based on adjacency to a station. Unfortunately, the available subway entrances shapefile does not identify which station an entrance belongs to and it was not clear how to map the entrances to the station. We therefore had to use the station file which represents a station as a single point.
 
 ## Methodology
 
-### Taxi Ridership
+#### Taxi Ridership
 
 <img src="{{ site.url }}/images/taxi-data.JPG">
 
-Ridership data was read in as a PySpark RDD and the subway stations shapefile was read in as a GeoPandas geodataframe. We defined our taxi rides of interest as those occurring within 300 feet of a subway station point, noting that the point is not necessarily reflective of a subway entrance. In order to identify the locations, the subway station shapefile was converted from latitude/longitude to northing/easting. We then created a new geometry column representing a 300 foot buffer around the subway station point. The original RDD was mapped to a new RDD limited to a tuple containing date and hour and the station for only those rides with pickups adjacent to a station. Rides also needed to be converted from latitude/longitude to northing/easting using a PyProj projection. We then filtered the dataset to include only the hours of interest (7am - 8pm). However, this did not yet create an aggregate ride count for each date and hour as each pickup was still identified separately. In order to count rides by station and time, we mapped the station into a list. Station was identified by an integer value so it was converted into a string. This mapping enabled us to Reduce By Key where each date-hour tuple was considered a key and the stations values were turned into a list through addition. Lastly, we mapped the the value of station lists to a Counter of each station with the number of rides for each date-hour tuple key. The RDD was then collected and converted to csv for further analysis and easier visualization using GeoPandas, Pylab and sklearn. This code runs in approximately 3 minutes and reduces nearly 12 million rides into 1.3 million rides contained within 69,710 lines. This is significantly fewer than the expected 198,660 lines because many stations, particularly in the outer boroughs have no taxi pickups for a given time. We had initially intended on analyzing New York City as a whole, but the low density of taxi rides in many areas of the city practically constrained us to Manhattan. Ride density can be seen in Figure 1 below. Many stations had between 5 and 20 rides in a given time period with a mean of 20 and a median of 11.
+Ridership data was read in as a PySpark RDD and the subway stations shapefile was read in as a GeoPandas geodataframe. We defined our taxi rides of interest as those occurring within 300 feet of a subway station point, noting that the point is not necessarily reflective of a subway entrance. In order to identify the locations, the subway station shapefile was converted from latitude/longitude to northing/easting. We then created a new geometry column representing a 300 foot buffer around the subway station point. The original RDD was mapped to a new RDD limited to a tuple containing date and hour and the station for only those rides with pickups adjacent to a station. Rides also needed to be converted from latitude/longitude to northing/easting using a PyProj projection. We then filtered the dataset to include only the hours of interest (7am - 8pm).
+
+However, this did not yet create an aggregate ride count for each date and hour as each pickup was still identified separately. In order to count rides by station and time, we mapped the station into a list. Station was identified by an integer value so it was converted into a string. This mapping enabled us to Reduce By Key where each date-hour tuple was considered a key and the stations values were turned into a list through addition.
+
+Lastly, we mapped the the value of station lists to a Counter of each station with the number of rides for each date-hour tuple key. The RDD was then collected and converted to csv for further analysis and easier visualization using GeoPandas, Pylab and sklearn. This code runs in approximately 3 minutes and reduces nearly 12 million rides into 1.3 million rides contained within 69,710 lines. This is significantly fewer than the expected 198,660 lines because many stations, particularly in the outer boroughs have no taxi pickups for a given time. We had initially intended on analyzing New York City as a whole, but the low density of taxi rides in many areas of the city practically constrained us to Manhattan. Ride density can be seen in Figure 1 below. Many stations had between 5 and 20 rides in a given time period with a mean of 20 and a median of 11.
 
 <img src="{{ site.url }}/images/avgridership.png">
 
 <cite>**Figure 1**: Map of the 1-2-3 and 4-5-6 subway lines with stations colored by mean density of traffic pickups in the area. Stations with fewer than 5 rides are excluded from the map. </cite>
 
-### Subway Delays
+#### Subway Delays
 
 <img src="{{ site.url }}/images/subway-data.JPG">
 
-We read the data as a PySpark RDD and performed necessary  steps to obtain the delay status: [1] we first filtered out all hours that we were not interested in by the filename; [2] we aggregated the subway arrival time by date, station, and line into a list using ReduceByKey. In this step, we also merged 2 and 3 lines as well as 4 and 5 lines due to the similarity of routes in Manhattan; [3] for each key (date, station, line), we calculated the time delta between previous arrival time and current arrival time, and get the arrival hour (mapValues); [4] calculated delay threshold for each line (groupByKey, mapValues); [5] assigned “1” to every record considered as delay (mapValues); [6] aggregated by hour, station, and date.  Initially, for step [5], we wanted to use subway status data to obtain the delay status for each line, each hour. However, the time delta distributions for each line on delays are very similar to the time delta distributions without delays. Thus, we decided to use 95 percentile as the delay threshold. From step [1], we were able to narrowed down the number of files from 125,092 to 48,608. To make the process effective, we first prototyped the code to 440 sample files and benchmark the running times for twenty-incremental number of files. The three different methods we tried were python with for loop, pyspark with for loop on step [3], and PySpark with numpy array processing on step [3]. Turned out, combination of PySpark and numpy array on step [3] was the best method. The code with python and for loop ran for approximately 360 minutes, PySpark + for loop finished the task in approximately 151 minutes, and combination of PySpark and numpy required only 121 minutes. All code in this step was tested on local pyspark environment (emulated hadoop, PySpark 2GB, running on Microsoft Surface Pro 3)
+We read the data as a PySpark RDD and performed necessary  steps to obtain the delay status: [1] we first filtered out all hours that we were not interested in by the filename; [2] we aggregated the subway arrival time by date, station, and line into a list using ReduceByKey. In this step, we also merged 2 and 3 lines as well as 4 and 5 lines due to the similarity of routes in Manhattan; [3] for each key (date, station, line), we calculated the time delta between previous arrival time and current arrival time, and get the arrival hour (mapValues); [4] calculated delay threshold for each line (groupByKey, mapValues); [5] assigned “1” to every record considered as delay (mapValues); [6] aggregated by hour, station, and date.  
 
-<img src="{{ site.url }}/images/runtime.png">
+Initially, for step [5], we wanted to use subway status data to obtain the delay status for each line, each hour. However, the time delta distributions for each line on delays are very similar to the time delta distributions without delays. Thus, we decided to use 95 percentile as the delay threshold. From step [1], we were able to narrowed down the number of files from 125,092 to 48,608. To make the process effective, we first prototyped the code to 440 sample files and benchmark the running times for twenty-incremental number of files. The three different methods we tried were python with for loop, pyspark with for loop on step [3], and PySpark with numpy array processing on step [3]. Turned out, combination of PySpark and numpy array on step [3] was the best method. The code with python and for loop ran for approximately 360 minutes, PySpark + for loop finished the task in approximately 151 minutes, and combination of PySpark and numpy required only 121 minutes. All code in this step was tested on local pyspark environment (emulated hadoop, PySpark 2GB, running on Microsoft Surface Pro 3)
 
-<cite>**Figure 2.** Benchmark of various methods on sample files</cite>
-
-### Data Merge and Tests
+#### Data Merge and Tests
 
 <img src="{{ site.url }}/images/datamerge.JPG">
 
@@ -65,7 +67,7 @@ We created a unique key column consisting of station-date-hour and joined the tw
 
 ## Results
 
-### Time between arrivals distributions
+#### Time between arrivals distributions
 
 As we can see in figure 3, time between arrivals varies depend on the line. The 95 percentiles for line 1, 23, 45, 6, and L are 17.77, 21.55, 21.07, 18.72, and 11.72 respectively.
 
@@ -73,7 +75,7 @@ As we can see in figure 3, time between arrivals varies depend on the line. The 
 
 <cite>**Figure 3.** Time between arrivals for each line</cite>
 
-### T-tests
+#### T-tests
 
 We performed one-sample T-test on the mean of both taxi rides with delay and taxi rides without delay. Mean of taxi rides on good services is 22.61 while on delays, it is slightly higher on 23.37. With confidence interval of 95% (α=0.05), it returned  t=2.62752 and p=0.00860418. Because p < 0.05, we reject the null hypothesis, thus, we can conclude that the mean number of taxi pickups near subway stations with delay is significantly higher than without delay.
 
