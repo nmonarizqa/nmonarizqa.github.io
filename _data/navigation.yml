@@ -2,16 +2,16 @@
 
 - title: Portofolio
   url: /portofolio/
-  excerpt: "Things I’ve designed, illustrated, developed, coded, and whatever."
+  excerpt: "Things I’ve analyzed, designed, or developed."
   image: portofolio.PNG
 
-- title: Articles
-  url: /articles/
-  excerpt: "Some writings about random technical things."
-  image: articles.png
-
-- title: About
-  url: /about/
+# - title: Articles
+#   url: /articles/
+#   excerpt: "Some writings about random technical things."
+#   image: articles.png
 
 - title: GitHub
   url: http://www.github.com/nmonarizqa
+
+- title: Medium
+  url: http://www.medium.com/@nmonarizqa
