@@ -3,7 +3,7 @@ layout: article
 title: About Me
 author: Nurvirta Monarizqa
 share: true
-modified: 2020-03-18T14:18:57-04:00
+modified: 2021-01-12T16:00:57-04:00
 image:
     feature: head2.jpg
 ---
